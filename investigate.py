@@ -100,7 +100,6 @@ def find_fqdn(host):
 def perform_ping(a_host):
     global response
     if operating_system=="windows":
-        #response=os.system('ping -a -n 2 {}'.format(a_host))
         # The command below suppresses the command prompt from popping up with every execution
         response=subprocess.call('ping -a -n 2 {}'.format(a_host), shell=True)
     elif operating_system=="linux":
@@ -115,10 +114,7 @@ def file_len(fname):
     #print('The file has {} servers'.format(i+1))
     return i + 1
 
-# ~ sys.stdout=all_output
-# ~ f.close()
+
 find_os()
 ping_servers()
-#file_len('ping_list_test.txt')
-#print(find_the_ip("www.sante-sports.gouv.fr"))
-#print(find_fqdn("8.8.8.8"))
+
