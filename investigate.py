@@ -7,15 +7,14 @@ Operating Systems Supported : Linux/Unix based systems and Windows
 Python Version : 3
 
 This script needs the xlsxwriter library.
-Copy all the hostnames/IPs to a file called "ping_list.txt" which is in the same directory as this script (or change the path in the script).
+Copy all the hostnames/IPs to a text file called "ping_list" which is in the same directory as this script (or change the path in the script).
 The results are stored in an excel file called "investigation_results.xslx" in the same directory.
 """
 
 
 import os,subprocess,re,itertools,platform,sys,socket,xlsxwriter
-# all_output=sys.stdout
-# f=open('ping_script_log.txt','w')
-# sys.stdout=f
+
+filename = 'ping_list.txt'
 
 def find_os():
     global operating_system
@@ -33,7 +32,7 @@ def find_os():
 
 def ping_servers():
     try:
-        input_file = open((os.path.join(os.getcwd(), 'ping_list.txt')),'r');
+        input_file = open((os.path.join(os.getcwd(), filename)),'r');
         workbook = xlsxwriter.Workbook('investigation_results.xlsx')
         script_logs = workbook.add_worksheet('logs')
         results = workbook.add_worksheet('results')
@@ -45,11 +44,11 @@ def ping_servers():
         print("The file being used is {} ".format(input_file))
         print('\n', "Running Ping on the servers" , '\n')
         print("The {} command set will be used".format(operating_system))
-        number_of_servers = file_len('ping_list_test.txt')
+        number_of_servers = file_len(filename)
         #code for table
         formatted_results = workbook.add_worksheet('result_table')
 
-        #
+        # Perform Ping and try to find the FQDN of each host from the list
         for each_host in servers:
                 if str(each_host):
                     with open('ping_script_result.txt','a') as result:
@@ -86,7 +85,7 @@ def ping_servers():
         workbook.close()
 
     except FileNotFoundError:
-        print("The input file does exist. Please place the file in the same directory as the script.")
+        print("The input file does exist. Please place the file \"ping_list.txt\" in the same directory as the script.")
 
 def find_the_ip(ip):
     if(len(str(re.search('[a-zA-Z]',ip))))==4:
@@ -121,7 +120,6 @@ def file_len(fname):
             pass
     #print('The file has {} servers'.format(i+1))
     return i + 1
-
 
 find_os()
 ping_servers()
