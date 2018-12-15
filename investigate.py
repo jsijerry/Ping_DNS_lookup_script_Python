@@ -1,6 +1,14 @@
 """Script to ease ivestigation on a huge list of hosts
+
 Author : JSIjerry
+
 Operating Systems Supported : Linux/Unix based systems and Windows
+
+Python Version : 3
+
+This script needs the xlsxwriter library.
+Copy all the hostnames/IPs to a file called "ping_list.txt" which is in the same directory as this script (or change the path in the script).
+The results are stored in an excel file called "investigation_results.xslx" in the same directory.
 """
 
 
@@ -25,7 +33,7 @@ def find_os():
 
 def ping_servers():
     try:
-        input_file = open((os.path.join(os.getcwd(), 'ping_list_test.txt')),'r');
+        input_file = open((os.path.join(os.getcwd(), 'ping_list.txt')),'r');
         workbook = xlsxwriter.Workbook('investigation_results.xlsx')
         script_logs = workbook.add_worksheet('logs')
         results = workbook.add_worksheet('results')
